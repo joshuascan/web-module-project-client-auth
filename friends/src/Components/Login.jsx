@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 import axios from "axios";
 
 const initialCredentials = {
@@ -8,6 +9,7 @@ const initialCredentials = {
 
 const Login = () => {
   const [credentials, setCredentials] = useState(initialCredentials);
+  const { push } = useHistory();
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -19,6 +21,7 @@ const Login = () => {
       .post("http://localhost:5000/api/login", credentials)
       .then((res) => {
         localStorage.setItem("token", res.data.payload);
+        push("/friends");
       })
       .catch((err) => {
         console.log(err);
