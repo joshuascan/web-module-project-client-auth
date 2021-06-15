@@ -40,3 +40,17 @@
 body {
   text-align: center;
 }
+
+.friends-container {
+  margin-top: 2%;
+  display: flex;
+  width: 90%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.friend {
+  border: 1px solid black;
+  width: 40%;
+  padding-bottom: 1%;
+}

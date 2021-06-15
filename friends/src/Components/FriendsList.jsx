@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
 const initialFriendValues = {
+  id: "",
   name: "",
   age: "",
   email: "",
@@ -28,6 +29,26 @@ const FriendsList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axiosWithAuth()
+      .post("/api/friends", { ...newFriend, id: Date.now() })
+      .then((res) => {
+        setFriends(res.data);
+        setNewFriend(initialFriendValues);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDelete = (id) => {
+    axiosWithAuth()
+      .delete(`/api/friends/${id}`)
+      .then((res) => {
+        setFriends(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -60,12 +81,15 @@ const FriendsList = () => {
           <button>Add Friend</button>
         </form>
       </div>
-      <div>
+      <div className="friends-container">
         {friends.map((friend) => (
-          <div key={friend.id}>
+          <div className="friend" key={friend.id}>
             <p>Name: {friend.name}</p>
             <p>Age: {friend.age}</p>
             <p>Email: {friend.email}</p>
+            <button type="submit" onClick={() => handleDelete(friend.id)}>
+              Delete
+            </button>
           </div>
         ))}
       </div>
