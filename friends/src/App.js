@@ -2,15 +2,21 @@
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/Login";
+import FriendsList from "./Components/FriendsList";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <h1>Friends App</h1>
+        <Link to="/login">Login</Link>
+        <Link to="/friends">Friends</Link>
+        <Link>Logout</Link>
       </div>
 
       <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/friends" component={FriendsList} />
         <Route component={Login} />
       </Switch>
     </Router>
