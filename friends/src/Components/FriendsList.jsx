@@ -15,8 +15,6 @@ const FriendsList = () => {
       });
   }, []);
 
-  console.log(friends);
-
   return (
     <div>
       <h2>List of Friends</h2>
