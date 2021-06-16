@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/Login";
@@ -9,16 +9,6 @@ import EditFriend from "./Components/EditFriend";
 
 function App() {
   const [friends, setFriends] = useState([]);
-  useEffect(() => {
-    axiosWithAuth()
-      .get("/api/friends")
-      .then((res) => {
-        setFriends(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const logout = () => {
     axiosWithAuth()

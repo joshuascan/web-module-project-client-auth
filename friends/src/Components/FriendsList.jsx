@@ -13,6 +13,17 @@ const FriendsList = (props) => {
   const [newFriend, setNewFriend] = useState(initialFriendValues);
   const { push } = useHistory();
 
+  useEffect(() => {
+    axiosWithAuth()
+      .get("/api/friends")
+      .then((res) => {
+        props.setFriends(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const handleChange = (e) => {
     setNewFriend({ ...newFriend, [e.target.name]: e.target.value });
   };
