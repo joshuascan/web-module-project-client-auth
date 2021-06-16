@@ -1,4 +1,4 @@
-// import React from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/Login";
@@ -8,6 +8,18 @@ import axiosWithAuth from "./utils/axiosWithAuth";
 import EditFriend from "./Components/EditFriend";
 
 function App() {
+  const [friends, setFriends] = useState([]);
+  useEffect(() => {
+    axiosWithAuth()
+      .get("/api/friends")
+      .then((res) => {
+        setFriends(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const logout = () => {
     axiosWithAuth()
       .post("/api/logout")
@@ -33,8 +45,12 @@ function App() {
 
       <Switch>
         <Route exact path="/login" component={Login} />
-        <PrivateRoute exact path="/friends" component={FriendsList} />
-        <PrivateRoute exact path="/edit-friend/:id" component={EditFriend} />
+        <PrivateRoute exact path="/friends">
+          <FriendsList friends={friends} setFriends={setFriends} />
+        </PrivateRoute>
+        <PrivateRoute exact path="/edit-friend/:id">
+          <EditFriend friends={friends} setFriends={setFriends} />
+        </PrivateRoute>
         <Route component={Login} />
       </Switch>
     </Router>

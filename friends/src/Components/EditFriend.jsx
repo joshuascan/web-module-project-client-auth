@@ -8,10 +8,11 @@ const initialFormValues = {
   email: "",
 };
 
-const EditFriend = () => {
+const EditFriend = (props) => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
   const { id } = useParams();
+  const { push } = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -26,10 +27,21 @@ const EditFriend = () => {
     })();
   }, [id]);
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axiosWithAuth()
+      .put(`/api/friends/${id}`, formValues)
+      .then((res) => {
+        props.setFriends(res.data);
+        push("/friends");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

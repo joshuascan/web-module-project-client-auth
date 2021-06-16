@@ -9,21 +9,9 @@ const initialFriendValues = {
   email: "",
 };
 
-const FriendsList = () => {
-  const [friends, setFriends] = useState([]);
+const FriendsList = (props) => {
   const [newFriend, setNewFriend] = useState(initialFriendValues);
   const { push } = useHistory();
-
-  useEffect(() => {
-    axiosWithAuth()
-      .get("/api/friends")
-      .then((res) => {
-        setFriends(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const handleChange = (e) => {
     setNewFriend({ ...newFriend, [e.target.name]: e.target.value });
@@ -34,7 +22,7 @@ const FriendsList = () => {
     axiosWithAuth()
       .post("/api/friends", { ...newFriend, id: Date.now() })
       .then((res) => {
-        setFriends(res.data);
+        props.setFriends(res.data);
         setNewFriend(initialFriendValues);
       })
       .catch((err) => {
@@ -50,7 +38,7 @@ const FriendsList = () => {
     axiosWithAuth()
       .delete(`/api/friends/${id}`)
       .then((res) => {
-        setFriends(res.data);
+        props.setFriends(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +76,7 @@ const FriendsList = () => {
         </form>
       </div>
       <div className="friends-container">
-        {friends.map((friend) => (
+        {props.friends.map((friend) => (
           <div className="friend" key={friend.id}>
             <p>Name: {friend.name}</p>
             <p>Age: {friend.age}</p>
