@@ -42,7 +42,7 @@ body {
 }
 
 .friends-container {
-  margin-top: 2%;
+  margin: 2% auto;
   display: flex;
   width: 90%;
   flex-wrap: wrap;
