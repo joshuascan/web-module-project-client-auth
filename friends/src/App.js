@@ -5,6 +5,7 @@ import Login from "./Components/Login";
 import FriendsList from "./Components/FriendsList";
 import PrivateRoute from "./Components/PrivateRoute";
 import axiosWithAuth from "./utils/axiosWithAuth";
+import EditFriend from "./Components/EditFriend";
 
 function App() {
   const logout = () => {
@@ -33,6 +34,7 @@ function App() {
       <Switch>
         <Route exact path="/login" component={Login} />
         <PrivateRoute exact path="/friends" component={FriendsList} />
+        <PrivateRoute exact path="/edit-friend/:id" component={EditFriend} />
         <Route component={Login} />
       </Switch>
     </Router>

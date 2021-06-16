@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
 const initialFriendValues = {
@@ -11,6 +12,7 @@ const initialFriendValues = {
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
   const [newFriend, setNewFriend] = useState(initialFriendValues);
+  const { push } = useHistory();
 
   useEffect(() => {
     axiosWithAuth()
@@ -38,6 +40,10 @@ const FriendsList = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleEdit = (id) => {
+    push(`/edit-friend/${id}`);
   };
 
   const handleDelete = (id) => {
@@ -87,6 +93,7 @@ const FriendsList = () => {
             <p>Name: {friend.name}</p>
             <p>Age: {friend.age}</p>
             <p>Email: {friend.email}</p>
+            <button onClick={() => handleEdit(friend.id)}>Edit</button>
             <button type="submit" onClick={() => handleDelete(friend.id)}>
               Delete
             </button>
