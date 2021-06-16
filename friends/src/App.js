@@ -19,12 +19,14 @@ function App() {
       });
   };
 
+  const isAuth = localStorage.getItem("token");
+
   return (
     <Router>
       <div className="App">
         <h1>Friends App</h1>
-        <Link to="/login">Login</Link>
-        <Link to="/friends">Friends</Link>
+        {!isAuth ? <Link to="/login">Login</Link> : <span></span>}
+        {isAuth ? <Link to="/friends">Friends</Link> : <span></span>}
         <Link onClick={logout}>Logout</Link>
       </div>
 

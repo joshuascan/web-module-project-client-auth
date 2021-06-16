@@ -3,8 +3,8 @@ import { useHistory } from "react-router";
 import axios from "axios";
 
 const initialCredentials = {
-  username: "Lambda",
-  password: "School",
+  username: "",
+  password: "",
 };
 
 const Login = () => {
